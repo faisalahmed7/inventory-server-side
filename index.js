@@ -12,12 +12,12 @@ app.use(express.json())
 
 
 
-const uri = "mongodb+srv://productUser:qraNLLsnNa80T1tj@cluster0.n44g7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.n44g7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 client.connect(err => {
 
     const collection = client.db("test").collection("devices");
-    console.log('connected with MYDB');
+    console.log('connected with DBMONGO');
     // perform actions on the collection object
     client.close();
 });

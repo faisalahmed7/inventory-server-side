@@ -4,6 +4,7 @@ const app = express()
 const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const res = require('express/lib/response');
+const { query } = require('express');
 require('dotenv').config()
 
 
@@ -32,10 +33,17 @@ async function run() {
             const product = await productCollection.findOne(query)
             res.send(product)
         })
-
+        //POST
         app.post('/inventory', async (req, res) => {
             const newProduct = req.body;
             const result = await productCollection.insertOne(newProduct)
+            res.send(result)
+        })
+        //DELETE
+        app.delete('/inventory/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await productCollection.deleteOne(query)
             res.send(result)
         })
 

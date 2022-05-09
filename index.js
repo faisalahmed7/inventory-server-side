@@ -77,7 +77,7 @@ async function run() {
             res.send(awardProducts)
         })
 
-        //
+        //Restock Item Data Load
 
         app.put('/inventory/:id', async (req, res) => {
             const id = req.params.id;

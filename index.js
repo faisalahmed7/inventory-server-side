@@ -21,6 +21,7 @@ async function run() {
         await client.connect();
         const productCollection = client.db('electronicsProducts').collection('product');
         const upcomingCollection = client.db('electronicsProducts').collection('upcoming');
+        const awardCollection = client.db('electronicsProducts').collection('award');
 
         app.get('/inventory', async (req, res) => {
             const query = {};
@@ -55,6 +56,12 @@ async function run() {
             const cursor = upcomingCollection.find(query)
             const upcomingProducts = await cursor.toArray()
             res.send(upcomingProducts)
+        })
+        app.get('/award', async (req, res) => {
+            const query = {};
+            const cursor = awardCollection.find(query)
+            const awardProducts = await cursor.toArray()
+            res.send(awardProducts)
         })
 
     }

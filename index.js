@@ -44,7 +44,7 @@ async function run() {
         //My items DATA 
         app.get("/item", async (req, res) => {
             const email = req.query.email;
-            console.log(email);
+
             const query = { email: email };
             const cursor = productCollection.find(query);
             const items = await cursor.toArray();
@@ -68,11 +68,30 @@ async function run() {
             const upcomingProducts = await cursor.toArray()
             res.send(upcomingProducts)
         })
+
+        //Award
         app.get('/award', async (req, res) => {
             const query = {};
             const cursor = awardCollection.find(query)
             const awardProducts = await cursor.toArray()
             res.send(awardProducts)
+        })
+
+        //
+
+        app.put('/inventory/:id', async (req, res) => {
+            const id = req.params.id;
+            const updateQuantity = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true }
+            const updatedDoc = {
+                $set: {
+                    quantity: updateQuantity.quantity,
+
+                }
+            }
+            const result = await productCollection.updateOne(filter, updatedDoc, options)
+            res.send(result)
         })
 
     }
